@@ -1,3 +1,5 @@
+// !Заняття 5 робота з DOM
+
 // !Задача 1 (доробити)
 // *Напишіть код JavaScript, щоб кубик рухався, коли настискати стрілки вверх, вниз, вілво, вправо
 // *Обмежити переміщення кубика щоб не виходив за межі екрану
@@ -204,31 +206,31 @@
 // !Задача 7
 // *Напишіть програму JavaScript TodoList для додавання і видалення завдань у список
 
-const refs = {
-	form: document.querySelector('form'),
-	addBtn: document.querySelector('#addTask'),
-	input: document.querySelector('#add'),
-	list: document.querySelector('#tasks'),
-};
+// const refs = {
+// 	form: document.querySelector('form'),
+// 	addBtn: document.querySelector('#addTask'),
+// 	input: document.querySelector('#add'),
+// 	list: document.querySelector('#tasks'),
+// };
 
-refs.form.addEventListener('submit', handleAddTask);
-refs.addBtn.addEventListener('click', handleAddTask);
+// refs.form.addEventListener('submit', handleAddTask);
+// refs.addBtn.addEventListener('click', handleAddTask);
 
-function handleAddTask(e) {
-	e.preventDefault();
+// function handleAddTask(e) {
+// 	e.preventDefault();
 
-	refs.list.insertAdjacentHTML(
-		'beforeend',
-		`
-		<li class="item">${refs.input.value}<button type="button">Remove</button></li>`
-	);
-	refs.form.reset();
-}
+// 	refs.list.insertAdjacentHTML(
+// 		'beforeend',
+// 		`
+// 		<li class="item">${refs.input.value}<button type="button">Remove</button></li>`
+// 	);
+// 	refs.form.reset();
+// }
 
-refs.list.addEventListener('click', handleRemoveTask);
+// refs.list.addEventListener('click', handleRemoveTask);
 
-function handleRemoveTask(e) {
-	if (e.target.nodeName === 'BUTTON') {
-		e.target.closest('.item').remove();
-	}
-}
+// function handleRemoveTask(e) {
+// 	if (e.target.nodeName === 'BUTTON') {
+// 		e.target.closest('.item').remove();
+// 	}
+// }
