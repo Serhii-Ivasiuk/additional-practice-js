@@ -1,6 +1,6 @@
 // !Заняття 5 робота з DOM
 
-// !Задача 1 (доробити)
+// !Задача 1
 // *Напишіть код JavaScript, щоб кубик рухався, коли настискати стрілки вверх, вниз, вілво, вправо
 // *Обмежити переміщення кубика щоб не виходив за межі екрану
 
@@ -13,22 +13,32 @@
 // const downKey = 'ArrowDown';
 
 // window.addEventListener('keydown', handleAroowsDown);
+
 // function handleAroowsDown(e) {
+// 	const currentCubePositionLeft = parseInt(cubeEl.style.left);
+// 	const currentCubePositionTop = parseInt(cubeEl.style.top);
+
 // 	if (e.key === leftKey) {
-// 		cubeEl.style.left = `${parseInt(cubeEl.style.left) - moveStep}px`;
+// 		if (currentCubePositionLeft === 0) {
+// 			return;
+// 		}
+// 		cubeEl.style.left = `${currentCubePositionLeft - moveStep}px`;
 // 	} else if (e.key === rightKey) {
-// 		cubeEl.style.left = `${parseInt(cubeEl.style.left) + moveStep}px`;
+// 		cubeEl.style.left = `${currentCubePositionLeft + moveStep}px`;
 // 	} else if (e.key === upKey) {
-// 		cubeEl.style.top = `${parseInt(cubeEl.style.top) - moveStep}px`;
+// 		if (currentCubePositionTop === 0) {
+// 			return;
+// 		}
+// 		cubeEl.style.top = `${currentCubePositionTop - moveStep}px`;
 // 	} else {
-// 		cubeEl.style.top = `${parseInt(cubeEl.style.top) + moveStep}px`;
+// 		cubeEl.style.top = `${currentCubePositionTop + moveStep}px`;
 // 	}
 // }
 
-// !Задача 2 (доделать)
+// !Задача 2
 // *Напишіть прогрму для шифрування текстово повідомлення за допомогою шифру Цезаря
 
-// const alphabet = [
+// const UA_ALPHABET = [
 // 	'а',
 // 	'б',
 // 	'в',
@@ -58,24 +68,65 @@
 // 	'ц',
 // 	'ч',
 // 	'ш',
-// 	'Щ',
+// 	'щ',
 // 	'ь',
 // 	'ю',
 // 	'я',
 // ];
 
+// const ENG_ALPHABET = [
+// 	'a',
+// 	'b',
+// 	'c',
+// 	'd',
+// 	'e',
+// 	'f',
+// 	'g',
+// 	'h',
+// 	'i',
+// 	'j',
+// 	'k',
+// 	'l',
+// 	'm',
+// 	'n',
+// 	'o',
+// 	'p',
+// 	'q',
+// 	'r',
+// 	's',
+// 	't',
+// 	'u',
+// 	'v',
+// 	'w',
+// 	'x',
+// 	'y',
+// 	'z',
+// ];
+
+// let alphabet = ENG_ALPHABET;
+
+// // alphabet = UA_ALPHABET; - український алфавіт
+
 // const refs = {
 // 	input: document.querySelector('#data'),
 // 	encryptBtn: document.querySelector('#encryptBtn'),
-// 	decipterBtn: document.querySelector('#decipterBtn'),
-// 	text: document.querySelector('#text'),
+// 	decryptBtn: document.querySelector('#decryptBtn'),
+// 	text: document.querySelector('#text > span'),
 // };
 
 // const encryptKey = 3;
 
 // refs.encryptBtn.addEventListener('click', handleEncrypt);
+// refs.decryptBtn.addEventListener('click', handleDecrypt);
 
 // function handleEncrypt() {
+// 	clearRelult();
+
+// 	if (refs.input.value.trim() === '') {
+// 		refs.input.value = '';
+// 		return;
+// 	}
+
 // 	const result = refs.input.value
 // 		.trim()
 // 		.split('')
@@ -95,11 +146,49 @@
 // 		})
 // 		.join('');
 
-// 	renderEncryptedData(result);
+// 	renderRelult(result);
+
+// 	refs.input.value = '';
 // }
 
-// function renderEncryptedData(data) {
+// function handleDecrypt() {
+// 	clearRelult();
+
+// 	if (refs.input.value.trim() === '') {
+// 		refs.input.value = '';
+// 		return;
+// 	}
+
+// 	const result = refs.input.value
+// 		.trim()
+// 		.split('')
+// 		.map(el => {
+// 			const currentIndex = alphabet.findIndex(letter => letter === el);
+// 			const decryptIndex = currentIndex - encryptKey;
+
+// 			if (currentIndex === -1) {
+// 				return el;
+// 			}
+
+// 			if (decryptIndex < 0) {
+// 				return alphabet[alphabet.length + decryptIndex];
+// 			}
+
+// 			return alphabet[decryptIndex];
+// 		})
+// 		.join('');
+
+// 	renderRelult(result);
+
+// 	refs.input.value = '';
+// }
+
+// function renderRelult(data) {
 // 	refs.text.innerHTML = data;
+// }
+
+// function clearRelult() {
+// 	refs.text.innerHTML = '';
 // }
 
 // !Задача 3
@@ -186,21 +275,31 @@
 // *- 2. Коли користувач клікає на іншу комірку, вона робиться активною, а всі інші стають неактивними
 // *- 3. Після перезавантаження сторінки активна комірка зберігається
 
-// const table = document.querySelector('.board > table');
-// const targetEl = 'TD';
+// const TARGET_ELEMENT = 'TD';
+// const LOCAL_STORAGE_KEY = 'active cell';
+// const activeCellIndex = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-// table.addEventListener('click', handleTableCellClick);
+// const refs = {
+// 	table: document.querySelector('.board > table'),
+// 	tableCells: document.querySelectorAll('.board > table td'),
+// };
 
-// function handleTableCellClick(e) {
-// 	const activeTableCell = document.querySelector('.active');
+// refs.table.addEventListener('click', handleTableCellClick);
 
-// 	if (activeTableCell) {
-// 		activeTableCell.classList.remove('active');
-// 	}
+// setActiveCell(activeCellIndex);
 
-// 	if (e.target.nodeName === targetEl) {
-// 		e.target.classList.add('active');
-// 	}
+// function handleTableCellClick({ target }) {
+// 	if (target.nodeName !== TARGET_ELEMENT) return;
+
+// 	document.querySelector('.board .active')?.classList.remove('active');
+// 	target.classList.add('active');
+
+// 	const currentActiveCellIndex = [...refs.tableCells].indexOf(target);
+// 	localStorage.setItem(LOCAL_STORAGE_KEY, currentActiveCellIndex);
+// }
+
+// function setActiveCell(index) {
+// 	refs.tableCells[index]?.classList.add('active');
 // }
 
 // !Задача 7
